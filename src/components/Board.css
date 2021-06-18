@@ -1,0 +1,5 @@
+.Board {
+  display: inline-grid;
+  grid-template-columns: auto auto auto auto auto auto auto auto auto;
+  margin: 1%;
+}

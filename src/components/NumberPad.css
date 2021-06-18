@@ -1,0 +1,31 @@
+.NumberPad {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+@media only screen and (max-width: 600px) {
+  .NumberPad {
+    grid-template-columns: auto auto auto auto auto auto auto auto auto;
+  }
+}
+
+.NumberKey {
+  font-size: clamp(0.2rem, 5rem, 5rem);
+  width: clamp(0.5rem, 5.5rem, 5.5rem);
+  height: clamp(0.5rem, 5.5rem, 5.5rem);
+  color: #0072e3;
+  background-color: #eaeef4;
+  margin: 3%;
+  padding-top: 1%;
+  padding-bottom: 10%;
+  border: none;
+}
+.NumberKey:hover {
+  background-color: rgb(216, 228, 247);
+}
+.NumberKey:disabled {
+  color: lightgrey;
+}
+.NumberKey:disabled:hover {
+  background-color: #eaeef4;
+}

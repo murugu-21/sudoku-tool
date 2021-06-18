@@ -1,0 +1,11 @@
+.Tools {
+  display: flex;
+  flex-direction: row;
+}
+.undo {
+  border: none;
+  background-color: transparent;
+}
+.item {
+  margin: 4%;
+}

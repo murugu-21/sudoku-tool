@@ -1,0 +1,20 @@
+.cell {
+  font-size: clamp(0.6rem, 2rem, 2rem);
+  width: clamp(0.8rem, 3.3rem, 3.3rem);
+  height: clamp(0.8rem, 3.3rem, 3.3rem);
+  text-align: center;
+  font-weight: normal;
+}
+.cell:focus {
+  outline: none;
+  background-color: "#ADD8E6";
+}
+.notes {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+.notes_cell {
+  font-size: clamp(0.1rem, 0.8rem, 0.8rem);
+  height: clamp(0.2rem, 1rem, 1rem);
+}
