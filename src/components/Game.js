@@ -33,12 +33,12 @@ const Game = () => {
   const updateBoard = (newBoard, row, col) => {
     let newHistory = JSON.parse(JSON.stringify(history));
     let newMismatch = Validate(newBoard);
+    newBoard = GenerateCandidates(newBoard, row, col);
+    newHistory.push(newBoard);
+    setBoard(newBoard);
+    setHistory(newHistory);
     if (newMismatch) {
-      newBoard = GenerateCandidates(newBoard, row, col);
-      newHistory.push(newBoard);
-      setBoard(newBoard);
       setMismatch(newMismatch);
-      setHistory(newHistory);
     } else {
       alert("Congrats you completed the puzzle");
     }
@@ -130,17 +130,20 @@ const Game = () => {
         }}
       />
       <div className="flex-container">
-        <Board
-          board={board}
-          r={row}
-          c={col}
-          mismatch={mismatch}
-          isPuzzle={isPuzzle}
-          changeFocus={(r, c) => {
-            setRow(r);
-            setCol(c);
-          }}
-        />
+        {play && (
+          <Board
+            board={board}
+            r={row}
+            c={col}
+            mismatch={mismatch}
+            isPuzzle={isPuzzle}
+            changeFocus={(r, c) => {
+              setRow(r);
+              setCol(c);
+            }}
+          />
+        )}
+
         <div className="flex-column-container">
           <button onClick={() => handleSolve()}>Solve</button>
           <NewGame />

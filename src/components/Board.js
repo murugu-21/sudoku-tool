@@ -33,8 +33,8 @@ const Board = (props) => {
       {props.board !== 2 &&
         props.board.map((row, r) =>
           row.map((item, c) => {
-            let right = "1px solid",
-              bottom = "1px solid",
+            let right = "1px solid rgb(0,0,0)",
+              bottom = "1px solid rgb(0,0,0)",
               left = null,
               top = null;
 

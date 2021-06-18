@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  --focus-color: "#ADD8E6";
 }
 
 .App-logo {
