@@ -12,6 +12,7 @@ import Solver from "./Solver";
 import NakedSingle from "./NakedSingle";
 import HiddenSingle from "./HiddenSingle";
 import GenerateCandidates from "./GenerateCandidates";
+import Validate from "./Validate";
 const Game = () => {
   const [min, setMin] = useState(0);
   const [sec, setSec] = useState(0);
@@ -23,13 +24,24 @@ const Game = () => {
   const [col, setCol] = useState(0);
   const [history, setHistory] = useState([]);
   const [isPen, setPen] = useState(false);
-
-  const updateBoard = (newBoard) => {
+  const [mismatch, setMismatch] = useState(
+    [...Array(9)].map(() => Array(9).fill(false))
+  );
+  const [isPuzzle, setIsPuzzle] = useState(
+    [...Array(9)].map(() => Array(9).fill(false))
+  );
+  const updateBoard = (newBoard, row, col) => {
     let newHistory = JSON.parse(JSON.stringify(history));
-    newBoard = GenerateCandidates(newBoard, row, col);
-    newHistory.push(newBoard);
-    setBoard(newBoard);
-    setHistory(newHistory);
+    let newMismatch = Validate(newBoard);
+    if (newMismatch) {
+      newBoard = GenerateCandidates(newBoard, row, col);
+      newHistory.push(newBoard);
+      setBoard(newBoard);
+      setMismatch(newMismatch);
+      setHistory(newHistory);
+    } else {
+      alert("Congrats you completed the puzzle");
+    }
   };
 
   const handleInput = (key) => {
@@ -54,7 +66,7 @@ const Game = () => {
         newBoard[row][col] = key;
       }
     }
-    updateBoard(newBoard);
+    updateBoard(newBoard, row, col);
   };
   const handleSolve = () => {
     let result = Solver({
@@ -64,7 +76,7 @@ const Game = () => {
     if (result) {
       setRow(result.i);
       setCol(result.j);
-      updateBoard(result.newBoard);
+      updateBoard(result.newBoard, result.i, result.j);
     }
   };
   //Changing board variable calls this function
@@ -90,6 +102,15 @@ const Game = () => {
 
   useEffect(() => {
     let newBoard = FetchPuzzle(0);
+    let newIsPuzzle = JSON.parse(JSON.stringify(isPuzzle));
+    for (let i = 0; i < newBoard.length; i++) {
+      for (let j = 0; j < newBoard[i].length; j++) {
+        if (typeof newBoard[i][j] === "number") {
+          newIsPuzzle[i][j] = true;
+        }
+      }
+    }
+    setIsPuzzle(newIsPuzzle);
     newBoard = InitialGenerate(newBoard);
     setBoard(newBoard);
     setHistory([newBoard]);
@@ -113,6 +134,8 @@ const Game = () => {
           board={board}
           r={row}
           c={col}
+          mismatch={mismatch}
+          isPuzzle={isPuzzle}
           changeFocus={(r, c) => {
             setRow(r);
             setCol(c);

@@ -2,9 +2,6 @@ import { useEffect, useState } from "react";
 import "./Board.css";
 import Cell from "./Cell";
 const Board = (props) => {
-  const [mismatch, setMismatch] = useState(
-    [...Array(9)].map(() => Array(9).fill(false))
-  );
   const [grey, setGrey] = useState(
     [...Array(9)].map(() => Array(9).fill(false))
   );
@@ -51,7 +48,7 @@ const Board = (props) => {
               <Cell
                 key={r * 9 + c}
                 value={item}
-                color="black"
+                color={props.isPuzzle[r][c] ? "black" : "#0072e3"}
                 left={left}
                 right={right}
                 bottom={bottom}
@@ -63,7 +60,7 @@ const Board = (props) => {
                 bgColor={
                   isFocus(r, c)
                     ? "#ADD8E6"
-                    : mismatch[r][c]
+                    : props.mismatch[r][c]
                     ? "#FFA2A2"
                     : grey[r][c]
                     ? "#eaeef4"

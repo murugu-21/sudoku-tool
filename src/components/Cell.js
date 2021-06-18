@@ -7,7 +7,7 @@ const Cell = (props) => {
       className="cell"
       tabIndex={0}
       style={{
-        color: props.textColor,
+        color: props.color,
         borderLeft: props.left,
         borderTop: props.top,
         borderRight: props.right,
