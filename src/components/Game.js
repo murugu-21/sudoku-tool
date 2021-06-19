@@ -13,6 +13,7 @@ import NakedSingle from "./NakedSingle";
 import HiddenSingle from "./HiddenSingle";
 import GenerateCandidates from "./GenerateCandidates";
 import Validate from "./Validate";
+import DummyBoard from "./DummyBoard";
 const Game = () => {
   const [min, setMin] = useState(0);
   const [sec, setSec] = useState(0);
@@ -143,7 +144,13 @@ const Game = () => {
             }}
           />
         )}
-
+        {!play && (
+          <DummyBoard
+            play={() => {
+              setPlay(!play);
+            }}
+          />
+        )}
         <div className="flex-column-container">
           <button onClick={() => handleSolve()}>Solve</button>
           <NewGame />
