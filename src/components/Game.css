@@ -11,3 +11,14 @@
     justify-content: center;
   }
 }
+.difficulty {
+  border: none;
+}
+.difficulty:focus {
+  border: none;
+  background-color: --focus-color;
+}
+.utility {
+  display: flex;
+  flex-direction: row;
+}

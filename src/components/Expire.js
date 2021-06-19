@@ -6,7 +6,7 @@ const Expire = (props) => {
     setTimeout(() => {
       props.expired();
     }, "5000");
-  }, [props.message]);
+  }, [props]);
 
   return <Alert variant={props.variant}>{props.message}</Alert>;
 };

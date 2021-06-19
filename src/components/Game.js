@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
+import "./Game.css";
 import Timer from "./Timer";
 import Board from "./Board";
 import NumberPad from "./NumberPad";
-import "./Game.css";
 import Tools from "./Tools";
-import NewGame from "./NewGame";
+import NewGameDropDown from "./NewGameDropDown";
 import FetchPuzzle from "./FetchPuzzle";
 import InitialGenerate from "./InitialGenerate";
 import deleteArrayElement from "./DeleteArrayElement";
@@ -33,6 +33,7 @@ const Game = () => {
     [...Array(9)].map(() => Array(9).fill(false))
   );
   const [message, setMessage] = useState(null);
+  const [level, setLevel] = useState(0);
   const updateBoard = (newBoard, row, col) => {
     let newHistory = JSON.parse(JSON.stringify(history));
     let newMismatch = Validate(newBoard);
@@ -109,8 +110,8 @@ const Game = () => {
   };
 
   useEffect(() => {
-    let newBoard = FetchPuzzle(0);
-    let newIsPuzzle = JSON.parse(JSON.stringify(isPuzzle));
+    let newBoard = FetchPuzzle(level);
+    let newIsPuzzle = [...Array(9)].map(() => Array(9).fill(false));
     for (let i = 0; i < newBoard.length; i++) {
       for (let j = 0; j < newBoard[i].length; j++) {
         if (typeof newBoard[i][j] === "number") {
@@ -122,23 +123,48 @@ const Game = () => {
     newBoard = InitialGenerate(newBoard);
     setBoard(newBoard);
     setHistory([newBoard]);
-  }, []);
+    setMin(0);
+    setSec(0);
+  }, [level]);
   return (
     <>
-      <Timer
-        min={min}
-        sec={sec}
-        play={play}
-        setMin={(min) => setMin(min)}
-        setSec={(sec) => {
-          setSec(sec);
-        }}
-        pause={() => {
-          setPlay(!play);
-        }}
-      />
       <div className="flex-container">
         <div className="board-container" style={{ marginRight: "3%" }}>
+          <div
+            className="utility"
+            style={{
+              fontWeight: "bold",
+              alignItems: "center",
+              marginLeft: "2%",
+              justifyContent: "space-between",
+            }}
+          >
+            <div>
+              Difficulty:
+              <select
+                className="difficulty"
+                value={level}
+                onChange={(event) => setLevel(event.target.value)}
+              >
+                <option value={0}>easy</option>
+                <option value={1}>medium</option>
+                <option value={2}>hard</option>
+              </select>
+            </div>
+
+            <Timer
+              min={min}
+              sec={sec}
+              play={play}
+              setMin={(min) => setMin(min)}
+              setSec={(sec) => {
+                setSec(sec);
+              }}
+              pause={() => {
+                setPlay(!play);
+              }}
+            />
+          </div>
           {play && (
             <Board
               board={board}
@@ -169,8 +195,13 @@ const Game = () => {
           )}
         </div>
 
-        <div className="flex-column-container">
-          <NewGame />
+        <div className="flex-column-container" style={{ marginTop: "3rem" }}>
+          <NewGameDropDown
+            title={"New Game"}
+            onClick={(level) => {
+              setLevel(level);
+            }}
+          />
           <Tools
             disable={history.length === 1}
             handleUndo={() => {

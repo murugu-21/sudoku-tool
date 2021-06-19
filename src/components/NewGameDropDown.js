@@ -1,13 +1,13 @@
 import { DropdownButton } from "react-bootstrap";
 import { Dropdown } from "react-bootstrap";
-const NewGame = (props) => {
+import "./NewGameDropDown.css";
+const NewGameDropDown = (props) => {
   return (
     <DropdownButton
       id="dropdown-item-button"
       variant="primary"
-      title="new Game"
+      title={props.title}
       size="lg"
-      style={{ width: "100%" }}
     >
       <Dropdown.Item as="button" onClick={() => props.onClick(0)}>
         Easy
@@ -22,4 +22,4 @@ const NewGame = (props) => {
   );
 };
 
-export default NewGame;
+export default NewGameDropDown;
