@@ -10,9 +10,9 @@
   }
 }
 .cell {
-  font-size: clamp(1.8rem, 5vw, 2.8rem);
-  width: clamp(2.5rem, 6vw, 3.3rem);
-  height: clamp(2.5rem, 6vw, 3.3rem);
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  width: clamp(2.5rem, 4vw, 3.3rem);
+  height: clamp(2.5rem, 4vw, 3.3rem);
   text-align: center;
   font-weight: normal;
 }
@@ -26,6 +26,6 @@
 }
 
 .notes_cell {
-  font-size: clamp(0.6rem, 1.8vw, 0.8rem);
-  height: clamp(0.8rem, 2vw, 1rem);
+  font-size: clamp(0.6rem, 1vw, 0.8rem);
+  height: clamp(0.8rem, 1.2vw, 1rem);
 }
