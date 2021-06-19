@@ -1,21 +1,30 @@
-.NumberPad {
-  display: grid;
-  grid-template-columns: auto auto auto;
-}
-
 @media only screen and (max-width: 600px) {
   .NumberPad {
     grid-template-columns: auto auto auto auto auto auto auto auto auto;
   }
+  .NumberKey {
+    font-size: 10vw;
+    width: 10vw;
+    height: 10vw;
+    background-color: transparent;
+  }
 }
-
+@media only screen and (min-width: 600px) {
+  .NumberPad {
+    display: grid;
+    grid-template-columns: auto auto auto;
+  }
+  .NumberKey {
+    font-size: clamp(2rem, 6vw, 5rem);
+    width: clamp(2rem, 6vw, 5rem);
+    height: clamp(2rem, 6vw, 5rem);
+    background-color: #eaeef4;
+    margin: 3%;
+  }
+}
 .NumberKey {
-  font-size: clamp(2rem, 6vw, 5rem);
-  width: clamp(2rem, 6vw, 5rem);
-  height: clamp(2rem, 6vw, 5rem);
   color: #0072e3;
-  background-color: #eaeef4;
-  margin: 3%;
+
   padding-top: 1%;
   padding-bottom: 10%;
   border: none;

@@ -1,18 +1,26 @@
 @media only screen and (max-width: 600px) {
   .cell {
-    font-size: clamp(1rem, 8vw, 5rem);
-    width: clamp(2rem, 10vw, 5rem);
-    height: clamp(2rem, 10vw, 5rem);
+    font-size: 8vw;
+    width: 10vw;
+    height: 10vw;
   }
   .notes_cell {
-    font-size: clamp(0.5rem, 3vw, 0.8rem);
-    height: clamp(0.7rem, 3vw, 1rem);
+    font-size: clamp(0.1rem, 3vw, 0.8rem);
+    height: clamp(0.2rem, 3vw, 1rem);
+  }
+}
+@media only screen and (min-width: 600px) {
+  .cell {
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    width: clamp(2.5rem, 4vw, 3.3rem);
+    height: clamp(2.5rem, 4vw, 3.3rem);
+  }
+  .notes_cell {
+    font-size: clamp(0.6rem, 1vw, 0.8rem);
+    height: clamp(0.8rem, 1.2vw, 1rem);
   }
 }
 .cell {
-  font-size: clamp(1.8rem, 3vw, 2.8rem);
-  width: clamp(2.5rem, 4vw, 3.3rem);
-  height: clamp(2.5rem, 4vw, 3.3rem);
   text-align: center;
   font-weight: normal;
 }
@@ -23,9 +31,4 @@
 .notes {
   display: grid;
   grid-template-columns: auto auto auto;
-}
-
-.notes_cell {
-  font-size: clamp(0.6rem, 1vw, 0.8rem);
-  height: clamp(0.8rem, 1.2vw, 1rem);
 }
