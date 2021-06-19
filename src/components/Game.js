@@ -110,21 +110,41 @@ const Game = () => {
   };
 
   useEffect(() => {
-    let newBoard = FetchPuzzle(level);
-    let newIsPuzzle = [...Array(9)].map(() => Array(9).fill(false));
-    for (let i = 0; i < newBoard.length; i++) {
-      for (let j = 0; j < newBoard[i].length; j++) {
-        if (typeof newBoard[i][j] === "number") {
-          newIsPuzzle[i][j] = true;
+    if (history.length > 1) {
+      localStorage.setItem("history", JSON.stringify(history));
+      localStorage.setItem("isPuzzle", JSON.stringify(isPuzzle));
+      localStorage.setItem("min", min);
+      localStorage.setItem("sec", sec);
+    }
+  }, [history]);
+
+  useEffect(() => {
+    let stored = JSON.parse(localStorage.getItem("history"));
+    if (stored) {
+      let newBoard = stored[stored.length - 1];
+      let newHistory = stored;
+      setMin(parseInt(localStorage.getItem("min")));
+      setSec(parseInt(localStorage.getItem("sec")));
+      setIsPuzzle(JSON.parse(localStorage.getItem("isPuzzle")));
+      setBoard(newBoard);
+      setHistory(newHistory);
+    } else {
+      let newBoard = FetchPuzzle(level);
+      let newIsPuzzle = [...Array(9)].map(() => Array(9).fill(false));
+      for (let i = 0; i < newBoard.length; i++) {
+        for (let j = 0; j < newBoard[i].length; j++) {
+          if (typeof newBoard[i][j] === "number") {
+            newIsPuzzle[i][j] = true;
+          }
         }
       }
+      newBoard = InitialGenerate(newBoard);
+      setIsPuzzle(newIsPuzzle);
+      setBoard(newBoard);
+      setHistory([newBoard]);
+      setMin(0);
+      setSec(0);
     }
-    setIsPuzzle(newIsPuzzle);
-    newBoard = InitialGenerate(newBoard);
-    setBoard(newBoard);
-    setHistory([newBoard]);
-    setMin(0);
-    setSec(0);
   }, [level]);
   return (
     <>

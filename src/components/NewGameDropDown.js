@@ -7,7 +7,7 @@ const NewGameDropDown = (props) => {
       id="dropdown-item-button"
       variant="primary"
       title={props.title}
-      size="lg"
+      style={{ width: "100%" }}
     >
       <Dropdown.Item as="button" onClick={() => props.onClick(0)}>
         Easy
