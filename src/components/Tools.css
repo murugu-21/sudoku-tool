@@ -1,11 +1,19 @@
 .Tools {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 }
 .undo {
   border: none;
   background-color: transparent;
 }
-.item {
-  margin: 4%;
+@media only screen and (max-width: 600px) {
+  .item {
+    font-size: 10vw;
+  }
+}
+@media only screen and (min-width: 600px) {
+  .item {
+    font-size: 4vw;
+  }
 }

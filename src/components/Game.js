@@ -14,6 +14,7 @@ import HiddenSingle from "./HiddenSingle";
 import GenerateCandidates from "./GenerateCandidates";
 import Validate from "./Validate";
 import DummyBoard from "./DummyBoard";
+import Expire from "./Expire";
 const Game = () => {
   const [min, setMin] = useState(0);
   const [sec, setSec] = useState(0);
@@ -31,6 +32,7 @@ const Game = () => {
   const [isPuzzle, setIsPuzzle] = useState(
     [...Array(9)].map(() => Array(9).fill(false))
   );
+  const [message, setMessage] = useState(null);
   const updateBoard = (newBoard, row, col) => {
     let newHistory = JSON.parse(JSON.stringify(history));
     let newMismatch = Validate(newBoard);
@@ -48,7 +50,11 @@ const Game = () => {
   const handleInput = (key) => {
     let newBoard = JSON.parse(JSON.stringify(board));
     if (key === "Delete") {
-      newBoard[row][col] = null;
+      if (isPuzzle[row][col]) {
+        setMessage("No can dos ville babydoll!!!");
+      } else {
+        newBoard[row][col] = null;
+      }
     } else {
       if (isPen) {
         if (
@@ -131,26 +137,33 @@ const Game = () => {
         }}
       />
       <div className="flex-container">
-        {play && (
-          <Board
-            board={board}
-            r={row}
-            c={col}
-            mismatch={mismatch}
-            isPuzzle={isPuzzle}
-            changeFocus={(r, c) => {
-              setRow(r);
-              setCol(c);
-            }}
-          />
-        )}
-        {!play && (
-          <DummyBoard
-            play={() => {
-              setPlay(!play);
-            }}
-          />
-        )}
+        <div className="board-container" style={{ marginRight: "3%" }}>
+          {play && (
+            <Board
+              board={board}
+              r={row}
+              c={col}
+              mismatch={mismatch}
+              isPuzzle={isPuzzle}
+              changeFocus={(r, c) => {
+                setRow(r);
+                setCol(c);
+              }}
+            />
+          )}
+
+          {!play && (
+            <DummyBoard
+              play={() => {
+                setPlay(!play);
+              }}
+            />
+          )}
+          {console.log(message) && message && (
+            <Expire delay="5000" children={message}></Expire>
+          )}
+        </div>
+
         <div className="flex-column-container">
           <button onClick={() => handleSolve()}>Solve</button>
           <NewGame />

@@ -9,22 +9,22 @@ import "./Tools.css";
 const Tools = (props) => {
   return (
     <div className="Tools">
-      <button
-        key={0}
+      <div
         className="item undo"
+        key={0}
         disabled={props.disable}
         onClick={() => props.handleUndo()}
       >
-        <FontAwesomeIcon icon={faUndo} size="3x" />
-      </button>
+        <FontAwesomeIcon icon={faUndo} size="1x" />
+      </div>
       <div className="item" key={1} onClick={() => props.onDelete()}>
-        <FontAwesomeIcon icon={faTrash} size="3x" />
+        <FontAwesomeIcon icon={faTrash} size="1x" />
       </div>
       <div className="item" key={2} onClick={() => props.changePen()}>
         <FontAwesomeIcon
           icon={faPen}
           style={{ color: props.isPen ? "blue" : "black" }}
-          size="3x"
+          size="1x"
         />
       </div>
       <div
@@ -35,7 +35,7 @@ const Tools = (props) => {
         }}
         style={{ color: props.isGenerate ? "red" : "black" }}
       >
-        <FontAwesomeIcon icon={faLightbulb} size="3x" />
+        <FontAwesomeIcon icon={faLightbulb} size="1x" />
       </div>
     </div>
   );
