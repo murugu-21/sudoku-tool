@@ -1,15 +1,14 @@
-import { useEffect, useState } from "react";
+import Alert from "react-bootstrap/Alert";
+import { useEffect } from "react";
 
 const Expire = (props) => {
-  const [visible, setVisible] = useState(true);
-
   useEffect(() => {
     setTimeout(() => {
-      setVisible(false);
-    }, props.delay);
-  }, [props.delay]);
+      props.expired();
+    }, "5000");
+  }, [props.message]);
 
-  return visible ? <div>{props.children}</div> : <div />;
+  return <Alert variant={props.variant}>{props.message}</Alert>;
 };
 
 export default Expire;

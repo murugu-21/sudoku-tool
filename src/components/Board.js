@@ -39,10 +39,10 @@ const Board = (props) => {
 
           if (c === 2 || c === 5) right = "2px solid rgb(0,0,0)";
           if (r === 2 || r === 5) bottom = "2px solid rgb(0,0,0)";
-          if (c === 8) right = "3px solid rgb(0,0,0)";
-          if (r === 8) bottom = "3px solid rgb(0,0,0)";
-          if (c === 0) left = "3px solid rgb(0, 0, 0)";
-          if (r === 0) top = "3px solid rgb(0, 0, 0)";
+          if (c === 8) right = "2px solid rgb(0,0,0)";
+          if (r === 8) bottom = "2px solid rgb(0,0,0)";
+          if (c === 0) left = "2px solid rgb(0, 0, 0)";
+          if (r === 0) top = "2px solid rgb(0, 0, 0)";
           return (
             <Cell
               key={r * 9 + c}

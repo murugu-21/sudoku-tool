@@ -1,7 +1,7 @@
 import {
+  faEraser,
   faLightbulb,
   faPen,
-  faTrash,
   faUndo,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,18 +9,18 @@ import "./Tools.css";
 const Tools = (props) => {
   return (
     <div className="Tools">
-      <div
+      <button
         className="item undo"
         key={0}
         disabled={props.disable}
         onClick={() => props.handleUndo()}
       >
         <FontAwesomeIcon icon={faUndo} size="1x" />
+      </button>
+      <div className="item eraser" key={1} onClick={() => props.onDelete()}>
+        <FontAwesomeIcon icon={faEraser} size="1x" />
       </div>
-      <div className="item" key={1} onClick={() => props.onDelete()}>
-        <FontAwesomeIcon icon={faTrash} size="1x" />
-      </div>
-      <div className="item" key={2} onClick={() => props.changePen()}>
+      <div className="item pen" key={2} onClick={() => props.changePen()}>
         <FontAwesomeIcon
           icon={faPen}
           style={{ color: props.isPen ? "blue" : "black" }}
@@ -28,12 +28,11 @@ const Tools = (props) => {
         />
       </div>
       <div
-        className="item"
+        className="item hint"
         key={3}
         onClick={() => {
-          props.toggleGenerate();
+          props.handleSolve();
         }}
-        style={{ color: props.isGenerate ? "red" : "black" }}
       >
         <FontAwesomeIcon icon={faLightbulb} size="1x" />
       </div>

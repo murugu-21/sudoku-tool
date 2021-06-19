@@ -50,8 +50,9 @@ const Game = () => {
   const handleInput = (key) => {
     let newBoard = JSON.parse(JSON.stringify(board));
     if (key === "Delete") {
-      if (isPuzzle[row][col]) {
+      if (isPuzzle[row][col] || typeof board[row][col] === "object") {
         setMessage("No can dos ville babydoll!!!");
+        return;
       } else {
         newBoard[row][col] = null;
       }
@@ -159,13 +160,16 @@ const Game = () => {
               }}
             />
           )}
-          {console.log(message) && message && (
-            <Expire delay="5000" children={message}></Expire>
+          {message && (
+            <Expire
+              message={message}
+              variant={"warning"}
+              expired={() => setMessage(null)}
+            ></Expire>
           )}
         </div>
 
         <div className="flex-column-container">
-          <button onClick={() => handleSolve()}>Solve</button>
           <NewGame />
           <Tools
             disable={history.length === 1}
@@ -175,6 +179,7 @@ const Game = () => {
             onDelete={() => handleInput("Delete")}
             isPen={isPen}
             changePen={() => setPen(!isPen)}
+            handleSolve={() => handleSolve()}
           />
           <NumberPad
             keypress={(key) => {

@@ -1,8 +1,12 @@
 .Timer {
-  font-size: 1.5rem;
+  font-size: 2rem;
   margin-top: 1%;
 }
 .Timer > button {
   border: none;
   background-color: transparent;
+  font-size: 2rem;
+}
+.Timer > button:focus {
+  border: none;
 }

@@ -6,6 +6,10 @@
 .undo {
   border: none;
   background-color: transparent;
+  color: rgb(49, 209, 0);
+}
+.undo:disabled {
+  color: lightgrey;
 }
 @media only screen and (max-width: 600px) {
   .item {
@@ -16,4 +20,10 @@
   .item {
     font-size: 4vw;
   }
+}
+.hint {
+  color: rgb(255, 217, 0);
+}
+.eraser {
+  color: rgb(255, 0, 0);
 }

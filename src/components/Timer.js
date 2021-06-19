@@ -32,7 +32,7 @@ const Timer = (props) => {
       >
         <FontAwesomeIcon
           icon={props.play ? faPauseCircle : faPlayCircle}
-          size="2x"
+          size="1x"
         />
       </button>
     </div>
