@@ -16,14 +16,12 @@ import Validate from "./Validate";
 import DummyBoard from "./DummyBoard";
 import Expire from "./Expire";
 const Game = () => {
-  const [min, setMin] = useState(0);
-  const [sec, setSec] = useState(0);
+  const [[min, sec], setTime] = useState([0, 0]);
   const [play, setPlay] = useState(true);
   const [board, setBoard] = useState(
     [...Array(9)].map(() => Array(9).fill(null))
   );
-  const [row, setRow] = useState(0);
-  const [col, setCol] = useState(0);
+  const [[row, col], setFocus] = useState([0, 0]);
   const [history, setHistory] = useState([]);
   const [isPen, setPen] = useState(false);
   const [mismatch, setMismatch] = useState(
@@ -43,8 +41,11 @@ const Game = () => {
     setHistory(newHistory);
     if (newMismatch) {
       setMismatch(newMismatch);
+      saveState();
     } else {
       alert("Congrats you completed the puzzle");
+      localStorage.removeItem("history", history);
+      localStorage.setItem("completed", level);
     }
   };
 
@@ -83,8 +84,7 @@ const Game = () => {
       techniques: [NakedSingle, HiddenSingle],
     });
     if (result) {
-      setRow(result.i);
-      setCol(result.j);
+      setFocus([result.i, result.j]);
       updateBoard(result.newBoard, result.i, result.j);
     }
   };
@@ -109,42 +109,48 @@ const Game = () => {
     setHistory(newHistory);
   };
 
-  useEffect(() => {
+  const saveState = () => {
     if (history.length > 1) {
       localStorage.setItem("history", JSON.stringify(history));
       localStorage.setItem("isPuzzle", JSON.stringify(isPuzzle));
-      localStorage.setItem("min", min);
-      localStorage.setItem("sec", sec);
+      localStorage.setItem("time", [min, sec]);
     }
-  }, [history]);
-
+  };
   useEffect(() => {
     let stored = JSON.parse(localStorage.getItem("history"));
     if (stored) {
       let newBoard = stored[stored.length - 1];
       let newHistory = stored;
-      setMin(parseInt(localStorage.getItem("min")));
-      setSec(parseInt(localStorage.getItem("sec")));
+      setTime(JSON.parse(localStorage.getItem("time")));
       setIsPuzzle(JSON.parse(localStorage.getItem("isPuzzle")));
       setBoard(newBoard);
       setHistory(newHistory);
+      let newMismatch = Validate(newBoard);
+      setMismatch(newMismatch);
     } else {
-      let newBoard = FetchPuzzle(level);
-      let newIsPuzzle = [...Array(9)].map(() => Array(9).fill(false));
-      for (let i = 0; i < newBoard.length; i++) {
-        for (let j = 0; j < newBoard[i].length; j++) {
-          if (typeof newBoard[i][j] === "number") {
-            newIsPuzzle[i][j] = true;
-          }
+      let storedLevel = parseInt(localStorage.getItem("completed"));
+      if (storedLevel) {
+        setLevel(storedLevel);
+      }
+    }
+  }, []);
+  useEffect(() => {
+    let newBoard = FetchPuzzle(level);
+    let newIsPuzzle = [...Array(9)].map(() => Array(9).fill(false));
+    for (let i = 0; i < newBoard.length; i++) {
+      for (let j = 0; j < newBoard[i].length; j++) {
+        if (typeof newBoard[i][j] === "number") {
+          newIsPuzzle[i][j] = true;
         }
       }
-      newBoard = InitialGenerate(newBoard);
-      setIsPuzzle(newIsPuzzle);
-      setBoard(newBoard);
-      setHistory([newBoard]);
-      setMin(0);
-      setSec(0);
     }
+    newBoard = InitialGenerate(newBoard);
+    setIsPuzzle(newIsPuzzle);
+    setBoard(newBoard);
+    setHistory([newBoard]);
+    setTime([0, 0]);
+    let newMismatch = Validate(newBoard);
+    setMismatch(newMismatch);
   }, [level]);
   return (
     <>
@@ -176,10 +182,7 @@ const Game = () => {
               min={min}
               sec={sec}
               play={play}
-              setMin={(min) => setMin(min)}
-              setSec={(sec) => {
-                setSec(sec);
-              }}
+              setTime={(time) => setTime(time)}
               pause={() => {
                 setPlay(!play);
               }}
@@ -193,8 +196,7 @@ const Game = () => {
               mismatch={mismatch}
               isPuzzle={isPuzzle}
               changeFocus={(r, c) => {
-                setRow(r);
-                setCol(c);
+                setFocus([r, c]);
               }}
             />
           )}

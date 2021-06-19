@@ -8,10 +8,9 @@ const Timer = (props) => {
     if (props.play) {
       let myInterval = setInterval(() => {
         if (props.sec === 59) {
-          props.setMin(props.min + 1);
-          props.setSec(0);
+          props.setTime([props.min + 1, 0]);
         } else {
-          props.setSec(props.sec + 1);
+          props.setTime([props.min, props.sec + 1]);
         }
       }, 1000);
       return () => {
