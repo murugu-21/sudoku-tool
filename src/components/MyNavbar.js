@@ -4,13 +4,13 @@ import Nav from "react-bootstrap/Nav";
 const MyNavbar = () => {
   return (
     <Navbar sticky="top" bg="dark" variant="dark" expand="lg">
-      <Navbar.Brand href="/">
+      <Navbar.Brand href="/" className="logo">
         <img
           alt=""
           src="/favicon.ico"
           width="30"
           height="30"
-          className="d-inline-block align-top logo"
+          className="d-inline-block align-top"
         />{" "}
         Sudoku
       </Navbar.Brand>
