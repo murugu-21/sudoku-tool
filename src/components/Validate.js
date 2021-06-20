@@ -9,6 +9,7 @@ const Validate = (board) => {
       }
       for (i = 0; i < board.length; i++) {
         if (board[r][c] === board[i][c] && i !== r && board[r][c] !== null) {
+          console.log(newMismatch, i, c);
           newMismatch[r][c] = true;
           newMismatch[i][c] = true;
           flag = false;

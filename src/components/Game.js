@@ -150,7 +150,7 @@ const Game = () => {
     } else if (key === "ArrowDown") {
       setFocus([(row + 1) % 9, col]);
     } else {
-      if (key === "Backspace") {
+      if (key === "Backspace" || key === "Delete") {
         key = "Delete";
         handleInput(key);
       } else if ([1, 2, 3, 4, 5, 6, 7, 8, 9].includes(parseInt(key))) {
@@ -163,6 +163,7 @@ const Game = () => {
     let stored = JSON.parse(localStorage.getItem("history"));
     if (stored) {
       let newBoard = stored[stored.length - 1];
+      console.log(newBoard[0].length);
       let newHistory = stored;
       setTime(JSON.parse(localStorage.getItem("time")));
       setIsPuzzle(JSON.parse(localStorage.getItem("isPuzzle")));
