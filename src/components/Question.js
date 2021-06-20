@@ -117,6 +117,13 @@ const Question = () => {
         </div>
 
         <div className="flex-column-container" style={{ marginTop: "3rem" }}>
+          <Button
+            variant="danger"
+            onClick={() => handleInput("Delete")}
+            style={{ marginBottom: "2%" }}
+          >
+            Delete
+          </Button>
           <NumberPad
             keypress={(key) => {
               handleInput(key);
