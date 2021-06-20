@@ -1,14 +1,14 @@
 import Alert from "react-bootstrap/Alert";
 import { useEffect } from "react";
 
-const Expire = (props) => {
+const Expire = ({ variant, message, expired }) => {
   useEffect(() => {
     setTimeout(() => {
-      props.expired();
+      expired();
     }, "5000");
-  }, [props]);
+  }, [expired]);
 
-  return <Alert variant={props.variant}>{props.message}</Alert>;
+  return <Alert variant={variant}>{message}</Alert>;
 };
 
 export default Expire;
