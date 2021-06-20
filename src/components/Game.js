@@ -24,29 +24,19 @@ const Game = () => {
   const [[row, col], setFocus] = useState([0, 0]);
   const [history, setHistory] = useState([]);
   const [isPen, setPen] = useState(false);
-  const [mismatch, setMismatch] = useState(
-    [...Array(9)].map(() => Array(9).fill(false))
-  );
   const [isPuzzle, setIsPuzzle] = useState(
     [...Array(9)].map(() => Array(9).fill(false))
   );
   const [message, setMessage] = useState(null);
   const [level, setLevel] = useState(0);
+
   const updateBoard = (newBoard, row, col) => {
     let newHistory = JSON.parse(JSON.stringify(history));
-    let newMismatch = Validate(newBoard);
     newBoard = GenerateCandidates(newBoard, row, col);
     newHistory.push(newBoard);
     setBoard(newBoard);
     setHistory(newHistory);
-    if (newMismatch) {
-      setMismatch(newMismatch);
-      saveState();
-    } else {
-      alert("Congrats you completed the puzzle");
-      localStorage.removeItem("history", history);
-      localStorage.setItem("completed", level);
-    }
+    saveState();
   };
 
   const handleInput = (key) => {
@@ -88,7 +78,17 @@ const Game = () => {
       updateBoard(result.newBoard, result.i, result.j);
     }
   };
-  //Changing board variable calls this function
+  //Changing board variable calls below two function
+  const mismatch = (board) => {
+    let mismatch = Validate(board);
+    if (mismatch) {
+      return mismatch;
+    }
+
+    alert("Congrats you completed the puzzle");
+    localStorage.removeItem("history", history);
+    localStorage.setItem("completed", level);
+  };
   const calDone = (board) => {
     let done = Array(9).fill(0);
     for (let i = 0; i < board.length; i++) {
@@ -113,27 +113,10 @@ const Game = () => {
     if (history.length > 1) {
       localStorage.setItem("history", JSON.stringify(history));
       localStorage.setItem("isPuzzle", JSON.stringify(isPuzzle));
-      localStorage.setItem("time", [min, sec]);
+      localStorage.setItem("time", JSON.stringify([min, sec]));
     }
   };
-  useEffect(() => {
-    let stored = JSON.parse(localStorage.getItem("history"));
-    if (stored) {
-      let newBoard = stored[stored.length - 1];
-      let newHistory = stored;
-      setTime(JSON.parse(localStorage.getItem("time")));
-      setIsPuzzle(JSON.parse(localStorage.getItem("isPuzzle")));
-      setBoard(newBoard);
-      setHistory(newHistory);
-      let newMismatch = Validate(newBoard);
-      setMismatch(newMismatch);
-    } else {
-      let storedLevel = parseInt(localStorage.getItem("completed"));
-      if (storedLevel) {
-        setLevel(storedLevel);
-      }
-    }
-  }, []);
+
   useEffect(() => {
     let newBoard = FetchPuzzle(level);
     let newIsPuzzle = [...Array(9)].map(() => Array(9).fill(false));
@@ -144,14 +127,30 @@ const Game = () => {
         }
       }
     }
+
     newBoard = InitialGenerate(newBoard);
     setIsPuzzle(newIsPuzzle);
     setBoard(newBoard);
     setHistory([newBoard]);
     setTime([0, 0]);
-    let newMismatch = Validate(newBoard);
-    setMismatch(newMismatch);
   }, [level]);
+  useEffect(() => {
+    let stored = JSON.parse(localStorage.getItem("history"));
+    console.log(stored);
+    if (stored) {
+      let newBoard = stored[stored.length - 1];
+      let newHistory = stored;
+      setTime(JSON.parse(localStorage.getItem("time")));
+      setIsPuzzle(JSON.parse(localStorage.getItem("isPuzzle")));
+      setBoard(newBoard);
+      setHistory(newHistory);
+    } else {
+      let storedLevel = parseInt(localStorage.getItem("completed"));
+      if (storedLevel) {
+        setLevel(storedLevel);
+      }
+    }
+  }, []);
   return (
     <>
       <div className="flex-container">
@@ -193,7 +192,7 @@ const Game = () => {
               board={board}
               r={row}
               c={col}
-              mismatch={mismatch}
+              mismatch={mismatch(board)}
               isPuzzle={isPuzzle}
               changeFocus={(r, c) => {
                 setFocus([r, c]);
