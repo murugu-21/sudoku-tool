@@ -6,9 +6,13 @@ const Expire = ({ variant, message, expired }) => {
     setTimeout(() => {
       expired();
     }, "5000");
-  }, [expired]);
+  }, [expired, message]);
 
-  return <Alert variant={variant}>{message}</Alert>;
+  return (
+    <Alert variant={variant} style={{ marginLeft: "3%" }}>
+      {message}
+    </Alert>
+  );
 };
 
 export default Expire;

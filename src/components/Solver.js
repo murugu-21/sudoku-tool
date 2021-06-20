@@ -15,7 +15,12 @@ const Solver = ({ board, techniques }) => {
 
         if (item) {
           newBoard[i][j] = item;
-          return { newBoard: newBoard, i: i, j: j };
+          return {
+            newBoard: newBoard,
+            i: i,
+            j: j,
+            message: techniques[k].name,
+          };
         }
       }
     }

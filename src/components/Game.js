@@ -52,7 +52,10 @@ const Game = () => {
     let newBoard = JSON.parse(JSON.stringify(board));
     if (key === "Delete") {
       if (isPuzzle[row][col] || typeof board[row][col] === "object") {
-        setMessage("No can dos ville babydoll!!!");
+        setMessage({
+          variant: "warning",
+          message: "No can dos ville babydoll!!!",
+        });
         return;
       } else {
         newBoard[row][col] = null;
@@ -84,6 +87,7 @@ const Game = () => {
     });
     if (result) {
       setFocus([result.i, result.j]);
+      setMessage({ variant: "info", message: result.message });
       updateBoard(result.newBoard, result.i, result.j);
     }
   };
@@ -255,8 +259,8 @@ const Game = () => {
           )}
           {message && (
             <Expire
-              message={message}
-              variant={"warning"}
+              message={message.message}
+              variant={message.variant}
               expired={() => setMessage(null)}
             ></Expire>
           )}
