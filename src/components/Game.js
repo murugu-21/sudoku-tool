@@ -29,14 +29,21 @@ const Game = () => {
   );
   const [message, setMessage] = useState(null);
   const [level, setLevel] = useState(0);
-
+  const saveState = (history) => {
+    if (history.length > 1) {
+      localStorage.setItem("history", JSON.stringify(history));
+      localStorage.setItem("isPuzzle", JSON.stringify(isPuzzle));
+      localStorage.setItem("time", JSON.stringify([min, sec]));
+      localStorage.setItem("level", level);
+    }
+  };
   const updateBoard = (newBoard, row, col) => {
     let newHistory = JSON.parse(JSON.stringify(history));
     newBoard = GenerateCandidates(newBoard, row, col);
     newHistory.push(newBoard);
     setBoard(newBoard);
     setHistory(newHistory);
-    saveState();
+    saveState(newHistory);
   };
 
   const handleInput = (key) => {
@@ -109,15 +116,7 @@ const Game = () => {
     setHistory(newHistory);
   };
 
-  const saveState = () => {
-    if (history.length > 1) {
-      localStorage.setItem("history", JSON.stringify(history));
-      localStorage.setItem("isPuzzle", JSON.stringify(isPuzzle));
-      localStorage.setItem("time", JSON.stringify([min, sec]));
-    }
-  };
-
-  useEffect(() => {
+  const generatePuzzle = (level) => {
     let newBoard = FetchPuzzle(level);
     let newIsPuzzle = [...Array(9)].map(() => Array(9).fill(false));
     for (let i = 0; i < newBoard.length; i++) {
@@ -133,7 +132,7 @@ const Game = () => {
     setBoard(newBoard);
     setHistory([newBoard]);
     setTime([0, 0]);
-  }, [level]);
+  };
   useEffect(() => {
     let stored = JSON.parse(localStorage.getItem("history"));
     console.log(stored);
@@ -142,12 +141,17 @@ const Game = () => {
       let newHistory = stored;
       setTime(JSON.parse(localStorage.getItem("time")));
       setIsPuzzle(JSON.parse(localStorage.getItem("isPuzzle")));
+      setLevel(parseInt(localStorage.getItem("level")));
       setBoard(newBoard);
       setHistory(newHistory);
     } else {
       let storedLevel = parseInt(localStorage.getItem("completed"));
       if (storedLevel) {
         setLevel(storedLevel);
+        generatePuzzle(storedLevel);
+      } else {
+        setLevel(0);
+        generatePuzzle(0);
       }
     }
   }, []);
@@ -169,7 +173,10 @@ const Game = () => {
               <select
                 className="difficulty"
                 value={level}
-                onChange={(event) => setLevel(event.target.value)}
+                onChange={(event) => {
+                  setLevel(event.target.value);
+                  generatePuzzle(event.target.value);
+                }}
               >
                 <option value={0}>easy</option>
                 <option value={1}>medium</option>
@@ -221,6 +228,7 @@ const Game = () => {
             title={"New Game"}
             onClick={(level) => {
               setLevel(level);
+              generatePuzzle(level);
             }}
           />
           <Tools
