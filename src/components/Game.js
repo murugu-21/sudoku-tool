@@ -15,6 +15,7 @@ import GenerateCandidates from "./GenerateCandidates";
 import Validate from "./Validate";
 import DummyBoard from "./DummyBoard";
 import Expire from "./Expire";
+import Celebration from "./Celebration";
 const Game = () => {
   const [[min, sec], setTime] = useState([0, 0]);
   const [play, setPlay] = useState(true);
@@ -29,6 +30,7 @@ const Game = () => {
   );
   const [message, setMessage] = useState(null);
   const [level, setLevel] = useState(0);
+  const [celebration, setCelebration] = useState(false);
   const saveState = (history) => {
     if (history.length > 1) {
       localStorage.setItem("history", JSON.stringify(history));
@@ -91,8 +93,8 @@ const Game = () => {
     if (mismatch) {
       return mismatch;
     }
-
-    alert("Congrats you completed the puzzle");
+    setCelebration(true);
+    setPlay(false);
     localStorage.removeItem("history", history);
     localStorage.setItem("completed", level);
   };
@@ -133,9 +135,28 @@ const Game = () => {
     setHistory([newBoard]);
     setTime([0, 0]);
   };
+
+  const handleKey = (key) => {
+    if (key === " " || key === "ArrowRight") {
+      setFocus([row, (col + 1) % 9]);
+    } else if (key === "ArrowLeft") {
+      setFocus([row, (col + 8) % 9]);
+    } else if (key === "ArrowUp") {
+      setFocus([(row + 8) % 9, col]);
+    } else if (key === "ArrowDown") {
+      setFocus([(row + 1) % 9, col]);
+    } else {
+      if (key === "Backspace") {
+        key = "Delete";
+        handleInput(key);
+      } else if ([1, 2, 3, 4, 5, 6, 7, 8, 9].includes(parseInt(key))) {
+        handleInput(parseInt(key));
+      }
+    }
+  };
+
   useEffect(() => {
     let stored = JSON.parse(localStorage.getItem("history"));
-    console.log(stored);
     if (stored) {
       let newBoard = stored[stored.length - 1];
       let newHistory = stored;
@@ -157,7 +178,13 @@ const Game = () => {
   }, []);
   return (
     <>
-      <div className="flex-container">
+      <div
+        className="flex-container"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          handleKey(e.key);
+        }}
+      >
         <div className="board-container" style={{ marginRight: "3%" }}>
           <div
             className="utility"
@@ -206,8 +233,20 @@ const Game = () => {
               }}
             />
           )}
-
-          {!play && (
+          {celebration && (
+            <Celebration
+              level={level}
+              min={min}
+              sec={sec}
+              newGame={(level) => {
+                setLevel(level);
+                generatePuzzle(level);
+                setCelebration(false);
+                setPlay(true);
+              }}
+            />
+          )}
+          {!celebration && !play && (
             <DummyBoard
               play={() => {
                 setPlay(!play);
