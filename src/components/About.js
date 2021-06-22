@@ -1,6 +1,6 @@
 const About = () => {
   return (
-    <div>
+    <article>
       <h1>Sudoku</h1>
       <p>
         Sudoku is a puzzle game. The goal is to fill the 9X9 grid with numbers 1
@@ -26,7 +26,11 @@ const About = () => {
         look into it and fix as soon as i can.
       </p>
       <p>This site is made using react and react-bootsrap</p>
-    </div>
+      <p>Design of playing board inspired from</p>
+      <a href="https://www.sudoku.com"></a>
+      <p>Solver inspired from</p>
+      <a href="https://www.sudoku-solutions.com"></a>
+    </article>
   );
 };
 

@@ -1,3 +1,5 @@
+import { tech_name } from "./url";
+
 const Solver = ({ board, techniques }) => {
   let newBoard = JSON.parse(JSON.stringify(board)),
     i,
@@ -19,7 +21,7 @@ const Solver = ({ board, techniques }) => {
             newBoard: newBoard,
             i: i,
             j: j,
-            message: techniques[k].name,
+            message: tech_name[k],
           };
         }
       }

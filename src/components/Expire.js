@@ -6,7 +6,7 @@ const Expire = ({ variant, message, expired }) => {
     setTimeout(() => {
       expired();
     }, "5000");
-  }, [expired, message]);
+  }, [message]);
 
   return (
     <Alert variant={variant} style={{ marginLeft: "3%" }}>
