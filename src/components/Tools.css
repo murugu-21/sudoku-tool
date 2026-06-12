@@ -2,28 +2,47 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 }
-.undo {
+.item {
   border: none;
   background-color: transparent;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  padding: 0.25rem 0.75rem;
+}
+.item:hover {
+  background-color: rgb(216, 228, 247);
+}
+.item:disabled {
+  color: lightgrey;
+  cursor: default;
+}
+.item:disabled:hover {
+  background-color: transparent;
+}
+.undo {
   color: rgb(49, 209, 0);
 }
-.undo:disabled {
-  color: lightgrey;
+.eraser {
+  color: rgb(255, 0, 0);
 }
-@media only screen and (max-width: 600px) {
-  .item {
-    font-size: 10vw;
-  }
+.pen {
+  color: black;
 }
-@media only screen and (min-width: 600px) {
-  .item {
-    font-size: 4vw;
-  }
+.pen.active {
+  color: blue;
 }
 .hint {
   color: rgb(255, 217, 0);
 }
-.eraser {
-  color: rgb(255, 0, 0);
+@media only screen and (max-width: 600px) {
+  .item {
+    font-size: 8vw;
+  }
+}
+@media only screen and (min-width: 600px) {
+  .item {
+    font-size: 2.5vw;
+  }
 }

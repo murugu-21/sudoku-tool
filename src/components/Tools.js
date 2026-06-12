@@ -11,31 +11,23 @@ const Tools = (props) => {
     <div className="Tools">
       <button
         className="item undo"
-        key={0}
         disabled={props.disable}
         onClick={() => props.handleUndo()}
       >
         <FontAwesomeIcon icon={faUndo} size="1x" />
       </button>
-      <div className="item eraser" key={1} onClick={() => props.onDelete()}>
+      <button className="item eraser" onClick={() => props.onDelete()}>
         <FontAwesomeIcon icon={faEraser} size="1x" />
-      </div>
-      <div className="item pen" key={2} onClick={() => props.changePen()}>
-        <FontAwesomeIcon
-          icon={faPen}
-          style={{ color: props.isPen ? "blue" : "black" }}
-          size="1x"
-        />
-      </div>
-      <div
-        className="item hint"
-        key={3}
-        onClick={() => {
-          props.handleSolve();
-        }}
+      </button>
+      <button
+        className={props.isPen ? "item pen active" : "item pen"}
+        onClick={() => props.changePen()}
       >
+        <FontAwesomeIcon icon={faPen} size="1x" />
+      </button>
+      <button className="item hint" onClick={() => props.handleSolve()}>
         <FontAwesomeIcon icon={faLightbulb} size="1x" />
-      </div>
+      </button>
     </div>
   );
 };
