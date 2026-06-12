@@ -24,11 +24,6 @@ const MyNavbar = () => {
             </Link>
           </Nav.Link>
           <Nav.Link>
-            <Link to="/upload" style={{ color: "white" }}>
-              Upload
-            </Link>
-          </Nav.Link>
-          <Nav.Link>
             <Link to="/about" style={{ color: "white" }}>
               About
             </Link>
