@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
-import { faPlayCircle, faPauseCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCirclePlay, faCirclePause } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Timer.css";
 const Timer = (props) => {
@@ -30,7 +30,7 @@ const Timer = (props) => {
         }}
       >
         <FontAwesomeIcon
-          icon={props.play ? faPauseCircle : faPlayCircle}
+          icon={props.play ? faCirclePause : faCirclePlay}
           size="1x"
         />
       </button>

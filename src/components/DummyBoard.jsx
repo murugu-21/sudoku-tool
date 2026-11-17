@@ -1,4 +1,4 @@
-import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCirclePlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Board.css";
 
@@ -36,7 +36,7 @@ const DummyBoard = (props) => {
               >
                 {r === 4 && c === 4 && (
                   <FontAwesomeIcon
-                    icon={faPlayCircle}
+                    icon={faCirclePlay}
                     style={{ color: "#0072e3" }}
                     size="lg"
                   />
