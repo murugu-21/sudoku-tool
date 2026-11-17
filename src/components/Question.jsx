@@ -5,9 +5,9 @@ import NumberPad from "./NumberPad";
 import Validate from "./Validate";
 import Expire from "./Expire";
 import { Button } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router";
 const Question = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [board, setBoard] = useState(
     [...Array(9)].map(() => Array(9).fill(null))
   );
@@ -85,7 +85,7 @@ const Question = () => {
     localStorage.setItem("time", JSON.stringify([0, 0]));
     localStorage.setItem("level", 2);
     localStorage.setItem("isPuzzle", JSON.stringify(isPuzzle));
-    history.push("/");
+    navigate("/");
   };
   return (
     <>

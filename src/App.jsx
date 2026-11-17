@@ -1,6 +1,6 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router";
 import MyNavbar from "./components/MyNavbar";
 import Game from "./components/Game";
 import About from "./components/About";
@@ -8,11 +8,11 @@ function App() {
   return (
     <div className="App">
       <MyNavbar />
-      <Switch>
-        <Route exact path="/" component={Game} />
-        <Route path="/about" component={About} />
-        <Redirect to="/" />
-      </Switch>
+      <Routes>
+        <Route path="/" element={<Game />} />
+        <Route path="/about" element={<About />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
     </div>
   );
 }

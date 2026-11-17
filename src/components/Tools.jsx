@@ -2,7 +2,7 @@ import {
   faEraser,
   faLightbulb,
   faPen,
-  faUndo,
+  faRotateLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Tools.css";
@@ -14,7 +14,7 @@ const Tools = (props) => {
         disabled={props.disable}
         onClick={() => props.handleUndo()}
       >
-        <FontAwesomeIcon icon={faUndo} size="1x" />
+        <FontAwesomeIcon icon={faRotateLeft} size="1x" />
       </button>
       <button className="item eraser" onClick={() => props.onDelete()}>
         <FontAwesomeIcon icon={faEraser} size="1x" />
